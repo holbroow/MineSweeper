@@ -1,7 +1,6 @@
 import java.util.*;
 
-import javax.swing.Action;
-import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 
 public class BombSquare extends GameSquare
 {
@@ -22,7 +21,6 @@ public class BombSquare extends GameSquare
 
 	public void clicked()
 	{
-		System.out.println(board.getX());
 		if (!visible)
 		{
 			visible = true;
@@ -35,7 +33,6 @@ public class BombSquare extends GameSquare
 				}
 				else 
 				{
-					System.out.printf("Current coordiates: %d, %d", xLocation, yLocation);
 					setImage("images/0.png");
 
 					BombSquare aboveLeft= (BombSquare) board.getSquareAt(xLocation-1, yLocation-1);
@@ -85,6 +82,16 @@ public class BombSquare extends GameSquare
 			{
 				setImage("images/bomb.png");
 				uncoverBoard();
+				if (!Driver.gameFinished)
+				{
+					JOptionPane.showMessageDialog(this,
+						"Oops! You hit a mine. Try again next time!",
+						"Game Over!",
+						JOptionPane.ERROR_MESSAGE);
+
+						Driver.gameFinished = true;
+						System.exit(0);
+				}
 			}
 		}
 	}
