@@ -8,8 +8,6 @@ public class BombSquare extends GameSquare
 	public static final int MINE_PROBABILITY = 6; // 1 = 100% chance for a bombSquare to be a bomb
 	private int nearbyBombs = 0;
 	private boolean visible = false;
-	private int arrayWidth = Driver.BOARD_WIDTH-1;
-	private int arrayHeight = Driver.BOARD_HEIGHT-1;
 
 	public BombSquare(int x, int y, GameBoard board)
 	{
