@@ -1,7 +1,15 @@
 import java.util.*;
-
 import javax.swing.JOptionPane;
 
+/**
+ * This class is an extension of GameSquare, handling all related behaviour
+ * of a Bomb Square in the game 'Bomb Sweeper'.
+ * 
+ * It handles all actions when a square is clicked and
+ * is essentially the main bundle of logic for the Bomb Sweeper game.
+ * 
+ * @author Will Holbrook
+ */
 public class BombSquare extends GameSquare
 {
 	private boolean thisSquareHasBomb = false;
