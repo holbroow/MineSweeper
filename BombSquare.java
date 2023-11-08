@@ -8,6 +8,7 @@ public class BombSquare extends GameSquare
 	public static final int MINE_PROBABILITY = 6; // 1 = 100% chance for a bombSquare to be a bomb
 	private int nearbyBombs = 0;
 	private boolean visible = false;
+	private BombSquare[] surroundingSquares = new BombSquare[8];
 
 	public BombSquare(int x, int y, GameBoard board)
 	{
@@ -24,7 +25,26 @@ public class BombSquare extends GameSquare
 			visible = true;
 			if(!thisSquareHasBomb)
 			{
-				countNearbyBombs(xLocation, yLocation);
+				surroundingSquares[0] = (BombSquare) board.getSquareAt(xLocation-1, yLocation-1);
+				surroundingSquares[1] = (BombSquare) board.getSquareAt(xLocation, yLocation-1);
+				surroundingSquares[2] = (BombSquare) board.getSquareAt(xLocation+1, yLocation-1);
+				surroundingSquares[3] = (BombSquare) board.getSquareAt(xLocation-1, yLocation);
+				surroundingSquares[4] = (BombSquare) board.getSquareAt(xLocation+1, yLocation);
+				surroundingSquares[5] = (BombSquare) board.getSquareAt(xLocation-1, yLocation+1);
+				surroundingSquares[6] = (BombSquare) board.getSquareAt(xLocation, yLocation+1);
+				surroundingSquares[7] = (BombSquare) board.getSquareAt(xLocation+1, yLocation+1);
+
+				for (BombSquare obj : surroundingSquares)
+				{
+					if (obj != null)
+					{
+						if (obj.getBombStatus())
+						{
+							nearbyBombs++;
+						}
+					}
+				}
+
 				if (nearbyBombs > 0)
 				{
 					setImage("images/" + nearbyBombs + ".png");
@@ -33,46 +53,12 @@ public class BombSquare extends GameSquare
 				{
 					setImage("images/0.png");
 
-					BombSquare aboveLeft= (BombSquare) board.getSquareAt(xLocation-1, yLocation-1);
-					BombSquare above = (BombSquare) board.getSquareAt(xLocation, yLocation-1);
-					BombSquare aboveRight = (BombSquare) board.getSquareAt(xLocation+1, yLocation-1);
-					BombSquare left = (BombSquare) board.getSquareAt(xLocation-1, yLocation);
-					BombSquare right = (BombSquare) board.getSquareAt(xLocation+1, yLocation);
-					BombSquare belowLeft = (BombSquare) board.getSquareAt(xLocation-1, yLocation+1);
-					BombSquare below = (BombSquare) board.getSquareAt(xLocation, yLocation+1);
-					BombSquare belowRight = (BombSquare) board.getSquareAt(xLocation+1, yLocation+1);
-
-					if (aboveLeft != null)
+					for (BombSquare obj : surroundingSquares)
 					{
-						aboveLeft.clicked();
-					}
-					if (above != null)
-					{
-						above.clicked();
-					}
-					if (aboveRight != null)
-					{
-						aboveRight.clicked();
-					}
-					if (left != null)
-					{
-						left.clicked();
-					}
-					if (right != null)
-					{
-						right.clicked();
-					}
-					if (belowLeft != null)
-					{
-						belowLeft.clicked();
-					}
-					if (below != null)
-					{
-						below.clicked();
-					}
-					if (belowRight != null)
-					{
-						belowRight.clicked();
+						if (obj != null)
+						{
+							obj.clicked();
+						}
 					}
 				}
 			}
@@ -90,76 +76,6 @@ public class BombSquare extends GameSquare
 						Driver.gameFinished = true;
 						System.exit(0);
 				}
-			}
-		}
-	}
-
-    public void countNearbyBombs(int x, int y)
-    {
-
-		BombSquare aboveLeft= (BombSquare) board.getSquareAt(xLocation-1, yLocation-1);
-		BombSquare above = (BombSquare) board.getSquareAt(xLocation, yLocation-1);
-		BombSquare aboveRight = (BombSquare) board.getSquareAt(xLocation+1, yLocation-1);
-		BombSquare left = (BombSquare) board.getSquareAt(xLocation-1, yLocation);
-		BombSquare right = (BombSquare) board.getSquareAt(xLocation+1, yLocation);
-		BombSquare belowLeft = (BombSquare) board.getSquareAt(xLocation-1, yLocation+1);
-		BombSquare below = (BombSquare) board.getSquareAt(xLocation, yLocation+1);
-		BombSquare belowRight = (BombSquare) board.getSquareAt(xLocation+1, yLocation+1);
-
-		if (aboveLeft != null)
-		{
-			if (aboveLeft.getBombStatus())
-			{
-				nearbyBombs++;
-			}
-		}
-		if (above != null)
-		{
-			if (above.getBombStatus()) 
-			{
-				nearbyBombs++;
-			}
-		}
-		if (aboveRight != null)
-		{
-			if (aboveRight.getBombStatus())
-			{
-				nearbyBombs++;
-			}
-		}
-		if (left != null)
-		{
-			if (left.getBombStatus())
-			{
-				nearbyBombs++;
-			}
-		}
-		if (right != null)
-		{
-			if (right.getBombStatus())
-			{
-				nearbyBombs++;
-			}
-		}
-		if (belowLeft != null)
-		{
-			if (belowLeft.getBombStatus())
-			{
-				nearbyBombs++;
-			}
-		}
-		if (below != null)
-		{
-			if (below.getBombStatus())
-			{
-				nearbyBombs++;
-			}
-		}
-		if (belowRight != null)
-		{
-			if (belowRight.getBombStatus())
-			{
-				nearbyBombs++;
 			}
 		}
 	}
