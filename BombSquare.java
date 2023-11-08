@@ -84,8 +84,8 @@ public class BombSquare extends GameSquare
 			else
 			{
 				setImage("images/bomb.png");
+				uncoverBoard();
 			}
-			visible = true; // unnecessary but making sure, due to a bug with an unknown cause
 		}
 	}
 
@@ -159,8 +159,28 @@ public class BombSquare extends GameSquare
 		}
 	}
 
+	public void uncoverBoard()
+	{
+		for (int i = 0; i < Driver.BOARD_WIDTH; i++)
+		{
+			for (int j = 0; j < Driver.BOARD_HEIGHT; j++)
+			{
+				BombSquare bs = (BombSquare) board.getSquareAt(i, j);
+				if (bs != null && !bs.getVisibility())
+				{
+					bs.clicked();
+				}
+			}
+		}
+	}
+
 	public boolean getBombStatus()
 	{
 		return thisSquareHasBomb;
+	}
+
+	public boolean getVisibility()
+	{
+		return visible;
 	}
 }
